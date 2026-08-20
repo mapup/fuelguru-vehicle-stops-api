@@ -1,0 +1,58 @@
+name: SonarQube Scan
+
+# PORTABLE TEMPLATE — copy into <your-repo>/.github/workflows/sonarqube.yml.
+# Adapted from mapup-security-team/.github/workflows/
+# sonarqube-monorepo-scan.yml with one fix: the project key is the repo
+# name (that file hardcodes its own), so this stays portable.
+#
+# BEFORE adding this: a project matching this repo's name must exist on
+# the SonarQube server (sonarqube.mapup.ai) and SONAR_TOKEN must be set —
+# this is not just a missing-file problem; the scan fails without both.
+#
+# Required secret: SONAR_TOKEN
+
+on:
+  schedule:
+    - cron: '15 3,15 * * *'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual run'
+        required: false
+        default: 'Manual SonarQube scan'
+
+concurrency:
+  group: sonar-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  SONAR_HOST_URL: https://sonarqube.mapup.ai
+
+jobs:
+  sonarqube-scan:
+    name: SonarQube Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log manual run reason
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "Manual trigger - ${{ github.event.inputs.reason }}"
+
+      - name: SonarQube scan
+        uses: SonarSource/sonarqube-scan-action@v7.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ github.event.repository.name }}
+            -Dsonar.sources=.
+            -Dsonar.exclusions=**/node_modules/**
