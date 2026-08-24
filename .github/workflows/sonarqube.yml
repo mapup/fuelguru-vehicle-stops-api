@@ -56,3 +56,17 @@ jobs:
             -Dsonar.projectKey=${{ github.event.repository.name }}
             -Dsonar.sources=.
             -Dsonar.exclusions=**/node_modules/**
+
+      - name: Update project sheet tab
+        if: always()
+        continue-on-error: true
+        run: |
+          sleep 120
+          RESPONSE=$(curl -s -L \
+            "${{ secrets.APPS_SCRIPT_WEB_APP_URL }}?project=${{ github.event.repository.name }}")
+          echo "Sheet update response: $RESPONSE"
+          if [ "$RESPONSE" = "ok" ]; then
+            echo "✅ Sheet updated successfully for ${{ github.event.repository.name }}"
+          else
+            echo "⚠️ Sheet update may have failed for ${{ github.event.repository.name }}: $RESPONSE"
+          fi
