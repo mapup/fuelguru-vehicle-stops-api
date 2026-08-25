@@ -1,7 +1,7 @@
 name: Gitleaks Secret Scan
 on:
   pull_request:
-    branches: [main, master]
+    branches: [main]
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:     # Enables manual run
@@ -47,7 +47,7 @@ jobs:
 # name: Gitleaks Secret Scan
 # on:
 #   pull_request:
-#     branches: [main, master]
+#     branches: [main]
 #   schedule:
 #     - cron: '0 3 * * 1'
 #   workflow_dispatch:
@@ -78,7 +78,7 @@ jobs:
 # name: Gitleaks Secret Scan
 # on:
 #   pull_request:
-#     branches: [main, master]
+#     branches: [main]
 #   schedule:
 #     - cron: '0 3 * * 1'  # Weekly Monday 3am UTC
 #   workflow_dispatch:       # Allow manual trigger

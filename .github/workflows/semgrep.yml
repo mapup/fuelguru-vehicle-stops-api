@@ -1,7 +1,7 @@
 name: Semgrep SAST
 on:
   pull_request:
-    branches: [main, master]
+    branches: [main]
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
@@ -89,7 +89,7 @@ jobs:
 # name: Semgrep SAST
 # on:
 #   pull_request:
-#     branches: [main, master]
+#     branches: [main]
 #   schedule:
 #     - cron: '0 4 * * 1'
 #   workflow_dispatch:     # Enables manual run
@@ -130,7 +130,7 @@ jobs:
 # # name: Semgrep SAST
 # # on:
 # #   pull_request:
-# #     branches: [main, master]
+# #     branches: [main]
 # #   schedule:
 # #     - cron: '0 4 * * 1'
 # #   workflow_dispatch:
@@ -158,7 +158,7 @@ jobs:
 # # name: Semgrep SAST
 # # on:
 # #   pull_request:
-# #     branches: [main, master]
+# #     branches: [main]
 # #   schedule:
 # #     - cron: '0 4 * * 1'  # Weekly Monday 4am UTC
 # #   workflow_dispatch:       # Allow manual trigger
