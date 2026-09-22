@@ -15,6 +15,7 @@ This documentation provides information on the CRUD operations for managing vehi
 - [Authentication](#authentication)
 - [Error Handling](#error-handling)
 - [Examples](#examples)
+- [Contributing](#contributing)
 - [Support](#support)
 
 ## Endpoints
@@ -100,6 +101,21 @@ The API uses standard HTTP status codes to indicate the success or failure of an
 ## Examples
 
 For detailed examples of how to use each endpoint, [refer to the sample request and response bodies linked within each endpoint description](./api-request-samples).
+
+## Contributing
+
+Run this once after cloning, before your first commit:
+
+```bash
+./hooks/install.sh
+```
+
+It points `core.hooksPath` at the tracked `hooks/` directory and installs
+[gitleaks](https://github.com/gitleaks/gitleaks) if it is missing, so a commit containing
+an API key or other credential is blocked before it is created. Git stores
+`core.hooksPath` in `.git/config`, which is not part of the repo, so every fresh clone and
+every new worktree needs its own run. Re-running it is harmless, and the `gitleaks` CI
+workflow is the backstop for any clone that skipped it.
 
 ## Support
 
